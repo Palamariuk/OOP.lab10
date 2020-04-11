@@ -3,20 +3,29 @@
 #include <QChar>
 #include <QString>
 #include <cstring>
+#include <QDebug>
 
 class MyString{
 private:
     char* string;
-    int length;
-
 public:
-    MyString(const char* _string = ""){
-        length = strlen(_string);
-        string = new char[length];
-        strcpy(string, _string);
+    MyString(){
+        string = nullptr;
+    };
+
+    MyString(const char* _string){
+        int length = strlen(_string);
+        string = new char[length + 1];
+        for(int i = 0; i < length; i++){
+            string[i] = _string[i];
+        }
+        string[length] = '\0';
     }
 
-    ~MyString(){ delete[] string; }
+    ~MyString(){
+        if(string != nullptr)
+            delete[] string;
+    }
 
     bool operator<(MyString other){
         return strcmp(string, other.string) < 0;
@@ -26,11 +35,12 @@ public:
         return strcmp(string, other.string) > 0;
     }
 
-    int getLength(){ return length; }
+    void print(){
+        qDebug() << string;
+    }
 
     operator std::string(){
-        std::string s(string);
-        return s;
+        return std::string(string);
     }
 
 };

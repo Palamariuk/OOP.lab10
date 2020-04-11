@@ -3,14 +3,16 @@
 
 #include <QListWidget>
 
-template<typename T>
+using namespace std;
+
+template<class T>
 class Array
 {
 private:
     T *values;
-    unsigned capacity = 1;
-    unsigned size = 0;
-
+    unsigned capacity;
+    unsigned size;
+public:
     void expand(){
         capacity *= 2;
         T *tempArray = new T[capacity];
@@ -24,10 +26,10 @@ private:
         }
     }
 
-public:
+
     Array(){
         this->size = 0;
-        capacity = 2;
+        capacity = 1;
         this->values = new T[this->capacity];
     };
 
@@ -60,8 +62,7 @@ public:
     };
 
     void append(const T& value){
-        if(size >= capacity)
-            expand();
+        if(size >= capacity) expand();
         values[size++] = value;
     };
 
@@ -74,11 +75,14 @@ public:
         return min;
     };
 
-    void operator>>(QListWidget *list){
-        for(unsigned i = 0; i < size; i++){
-            list->addItem(QString::fromStdString(values[i]));
-        }
-    }
+    T getElement(unsigned index){
+        return values[index];
+    };
+
+    unsigned getSize(){
+        return size;
+    };
 };
 
 #endif // MYARRAY_H
+

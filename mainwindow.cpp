@@ -21,32 +21,35 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    char* text = QStringToCharArray(ui->lineEdit->text());
+    char *text = QStringToCharArray(ui->lineEdit->text());
     MyString ms(text);
-    list.append(ms);
+    list.append(ms); //тут крашається прога коли додаю елемент і перевищую копасіті. тоді говорить що подвійде видалення пам'яті
     ui->listWidget->clear();
     ui->lineEdit->clear();
-    list >> ui->listWidget;
+    for(unsigned i = 0; i < list.getSize(); i++){
+        ui->listWidget->addItem(QString::fromStdString((std::string)list.getElement(i))); //отут і викинає проблема.
+    }
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    MyString min = list.min();
-    ui->lineEdit_2->setText(QString::fromStdString(min));
+    /*MyString min = list.min();
+    ui->lineEdit_2->setText(QString::fromStdString((std::string)min));*/
+
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    list.sortD();
-    ui->listWidget->clear();
-    list >> ui->listWidget;
+    /*list.sortD();
+    ui->listWidget->clear();*/
+
 }
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    list.sortI();
-    ui->listWidget->clear();
-    list >> ui->listWidget;
+    /*list.sortI();
+    ui->listWidget->clear();*/
+
 }
 
 char *MainWindow::QStringToCharArray(QString text)
