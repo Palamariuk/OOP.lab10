@@ -2,6 +2,7 @@
 #define MYARRAY_H
 
 #include <QListWidget>
+#include <QDebug>
 
 using namespace std;
 
@@ -19,13 +20,15 @@ public:
         for(unsigned i = 0; i < size; i++){
             tempArray[i] = values[i];
         }
+        for (unsigned i = 0; i < size; i++){
+            qDebug() << tempArray[i]->toQString();
+        }
         delete[] values;
         values = tempArray;
         for(unsigned i = size; i < capacity; i++){
             values[i] = T();
         }
     }
-
 
     Array(){
         this->size = 0;
@@ -75,7 +78,7 @@ public:
         return min;
     };
 
-    T getElement(unsigned index){
+    const T getElement(unsigned index){
         return values[index];
     };
 
