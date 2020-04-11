@@ -29,6 +29,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Array<MyString> list;
+    Array<MyString*> *list;
 };
 #endif // MAINWINDOW_H
