@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    list = new Array<MyString*>();
+    ;
 }
 
 MainWindow::~MainWindow()
@@ -21,13 +21,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    const char *text = QStringToCharArray(ui->lineEdit->text());
-    MyString *ms = new MyString(text);
-    list->append(ms); //тут крашається прога коли додаю елемент і перевищую копасіті. тоді говорить що подвійде видалення пам'яті
+    char *text = QStringToCharArray(ui->lineEdit->text());
+    MyString ms(text);
+    list.append(ms); //тут крашається прога коли додаю елемент і перевищую копасіті. тоді говорить що подвійде видалення пам'яті
     ui->listWidget->clear();
     ui->lineEdit->clear();
-    for(unsigned i = 0; i < list->getSize(); i++){
-        ui->listWidget->addItem(list->getElement(i)->toQString()); //отут і викинає проблема.
+    for(unsigned i = 0; i < list.getSize(); i++){
+        ui->listWidget->addItem(QString::fromStdString((std::string)list.getElement(i))); //отут і викинає проблема.
     }
 }
 
@@ -54,9 +54,5 @@ void MainWindow::on_pushButton_4_clicked()
 
 char *MainWindow::QStringToCharArray(QString text)
 {
-    std::string s = text.toStdString();
-    char* res = new char[s.size() + 1];
-    strcpy(res, s.c_str());
-
-    return res;
+    return text.toLocal8Bit().data();
 }

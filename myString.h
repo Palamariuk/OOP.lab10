@@ -20,7 +20,6 @@ public:
             string[i] = _string[i];
         }
         string[length] = '\0';
-        qDebug() << string;
     }
 
     ~MyString(){
@@ -44,13 +43,6 @@ public:
         return std::string(string);
     }
 
-    const QString toQString() const{
-        QString res = "";
-        for (unsigned i = 0; i < strlen(this->string); i++){
-            res += this->string[i];
-        }
-        return res;
-    }
 };
 
 #endif // MYSTRING_H
